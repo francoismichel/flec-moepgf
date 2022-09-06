@@ -75,8 +75,8 @@ maddrc256_imul_sse2(uint8_t *region1, const uint8_t *region2,
 	sp[7] = _mm_set1_epi16(p[7]);
 
 	for (end=region1+length; region1<end; region1+=16, region2+=16) {
-		reg1 = _mm_load_si128((void *)region1);
-		reg2 = _mm_load_si128((void *)region2);
+		reg1 = _mm_loadu_si128((void *)region1);
+		reg2 = _mm_loadu_si128((void *)region2);
 
 		ri[0] = _mm_and_si128(reg2, mi[0]);
 		ri[1] = _mm_and_si128(reg2, mi[1]);
@@ -113,7 +113,7 @@ maddrc256_imul_sse2(uint8_t *region1, const uint8_t *region2,
 		ri[0] = _mm_xor_si128(ri[0], ri[4]);
 		ri[0] = _mm_xor_si128(ri[0], reg1);
 
-		_mm_store_si128((void *)region1, ri[0]);
+		_mm_storeu_si128((void *)region1, ri[0]);
 	}
 }
 
@@ -151,7 +151,7 @@ mulrc256_imul_sse2(uint8_t *region, uint8_t constant, size_t length)
 	sp[7] = _mm_set1_epi16(p[7]);
 
 	for (end=region+length; region<end; region+=16) {
-		reg = _mm_load_si128((void *)region);
+		reg = _mm_loadu_si128((void *)region);
 
 		ri[0] = _mm_and_si128(reg, mi[0]);
 		ri[1] = _mm_and_si128(reg, mi[1]);
@@ -187,7 +187,7 @@ mulrc256_imul_sse2(uint8_t *region, uint8_t constant, size_t length)
 		ri[4] = _mm_xor_si128(ri[4], ri[6]);
 		ri[0] = _mm_xor_si128(ri[0], ri[4]);
 
-		_mm_store_si128((void *)region, ri[0]);
+		_mm_storeu_si128((void *)region, ri[0]);
 	}
 }
 

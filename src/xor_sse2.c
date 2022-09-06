@@ -34,10 +34,10 @@ xorr_sse2(uint8_t *region1, const uint8_t *region2, size_t length)
 	register __m128i in, out;
 
 	for (end=region1+length; region1<end; region1+=16, region2+=16) {
-		in  = _mm_load_si128((void *)region2);
-		out = _mm_load_si128((void *)region1);
+		in  = _mm_loadu_si128((void *)region2);
+		out = _mm_loadu_si128((void *)region1);
 		out = _mm_xor_si128(in, out);
-		_mm_store_si128((void *)region1, out);
+		_mm_storeu_si128((void *)region1, out);
 	}
 }
 
